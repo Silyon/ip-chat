@@ -58,9 +58,24 @@ ul{
   background-color: var(--main-accent-colour);
 }
 
+#groupInfo{
+  width: 100%;
+  position: relative;
+  text-align: center;
+  border-bottom: 2px solid white;
+  font-weight: bolder;
+  color:white;
+  background: var(--main-accent-colour);
+}
+
+#groupAdminInfoName:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 #right-area{
   width: 89.9%;
-  height: 615px;
+  height: 1px;
   position: relative;
   float: right;
   right: 6px;
@@ -237,9 +252,9 @@ ul{
   text-decoration: underline;
 }
 
-.msgAva{
+/* .msgAva{
   cursor: pointer;
-}
+} */
 
 .msgBody{
   color:white;
@@ -262,11 +277,11 @@ ul{
   margin-left: 15px;
 }
 
-#groupName{
-  font-size: 11px;
+.groupName{
+  font-size: 13px;
 }
 
-#groupName:visited, #groupName:link{
+.groupName:visited, .groupName:link{
   color: white;
   text-decoration: none;
   position: relative;
@@ -276,8 +291,24 @@ ul{
   word-break:break-all;
 }
 
-#groupDiv{
+.groupName:hover{
+  text-decoration:underline;
+}
+
+.groupDiv{
   margin-top: 5px;
+}
+
+.groupPicture{
+  position: relative;
+  top: 3px;
+  margin-left: 2px;
+}
+
+.currGroupDiv{
+  margin-top: 5px;
+  background-color: var(--dark-accent-colour);
+  border: 1px solid white;
 }
 
 .hide{
@@ -379,16 +410,21 @@ ul{
   margin-top: 5px;
 }
 
-#friendDiv{
+.friendDiv{
   margin-top: 5px;
 }
 
-#friendName{
+.friendName{
   color:white;
   font-size: 14px;
   position: relative;
   top: -15px;
   left: 3px;
+}
+
+.friendName:hover{
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 #chAva{
@@ -407,4 +443,13 @@ ul{
   font-size: 12px;
   position: relative;
   top: 20px;
+}
+
+#grNameInp{
+  position:relative;
+  top: 30px;
+  border-bottom: 2px solid var(--main-accent-colour);
+  background-color: var(--main-bg-colour);
+  color: var(--main-accent-colour);
+  font-weight: bold;
 }

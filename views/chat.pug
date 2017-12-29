@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  -var br = "<br />";
   
   #main-body
     #right-area
@@ -10,8 +9,15 @@ block content
           textarea#m(cols = 34 rows = 10 autocomplete = "off")
             
           button#sendButton Send
-        
+          
       #chat-window
+        #groupInfo
+          for gr in groups
+            - if(gr._id.toString() == currGroup)
+              - if(gr.admin.toString() == user._id.toString())
+                span#groupAdminInfoName= gr.name
+              - if(gr.admin.toString() != user._id.toString())
+                span#groupInfoName= gr.name
         ul#messages
           each msg in messages
             li#msgLi
@@ -33,21 +39,33 @@ block content
         span#groupBig Groups
         ul#groups
           each gr in groups
-            #groupDiv
-              li#groupLi 
-                img#groupPicture(src=gr.picture height=40) 
-                - var id = gr._id;
-                a#groupName(href='/users/chat/' + id)= gr.name
+            - var nm = gr.name;
+            - if(currGroup == gr._id.toString())
+              .currGroupDiv
+                li.groupLi 
+                  img.groupPicture(src=gr.picture height=40 width=40) 
+                  - var id = gr._id;
+                  - if(nm.length > 10) nm = nm.substring(0,10) + "...";
+                  a.groupName(href='/users/chat/' + id)= nm
+                  
+            - if(currGroup != gr._id.toString())
+              .groupDiv
+                li.groupLi 
+                  img.groupPicture(src=gr.picture height=40 width=40) 
+                  - var id = gr._id;
+                  - if(nm.length > 10) nm = nm.substring(0,10) + "...";
+                  a.groupName(href='/users/chat/' + id)= nm
+              
         if friends
           span#groupBig Friends
           ul#friends
             each fr in friends
               each usr in users
                 -if(usr._id.toString() == fr.toString())
-                  #friendDiv
-                    li#friendLi
-                      img#friendsPicture(src=usr.avatar height=40 width=40)
-                      span#friendName= usr.username
+                  .friendDiv
+                    li.friendLi
+                      img.friendsPicture(src=usr.avatar height=40 width=40)
+                      span.friendName= usr.username
                   
       #grCreate      
       a#groupCreateLink(href='/groups/create') New Group
@@ -71,6 +89,21 @@ block content
         var groupId = url.substring(url.lastIndexOf('/') + 1);
         
         if (document.addEventListener) {
+          groupAdmin = document.getElementById("groupAdminInfoName");
+          
+          if(groupAdmin){
+          groupAdmin.addEventListener('contextmenu', function(e){
+            var text = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+            
+            document.getElementById("chGrText").href = "/groups/settings/" + text;
+            document.getElementById("gmenu").style.top = mouseY(e) + 'px';
+            document.getElementById("gmenu").style.left = mouseX(e) + 'px';
+            document.getElementById("gmenu").className = "show";
+            
+            e.preventDefault();
+            }, false);
+          }
+          
           usernames = document.getElementsByClassName("msgUsr");
           
           for(i = 0; i < usernames.length; i++){
@@ -91,8 +124,9 @@ block content
           
           friendnames = document.getElementsByClassName("friendName");
           
-          for(i = 0; i < friendnames.length;i++){
+          for(i = 0; i < friendnames.length; i++){
             friendnames[i].addEventListener('contextmenu', function(e) {
+                
                 e = e || window.event;
                 var target = e.target || e.srcElement;
                 var text = target.textContent || text.innerText;
@@ -110,6 +144,8 @@ block content
         
         $(document).bind("click", function(event) {
           document.getElementById("rmenu").className = "hide";
+          document.getElementById("lmenu").className = "hide";
+          document.getElementById("gmenu").className = "hide";
        });
        
        $(document).ready(function(){

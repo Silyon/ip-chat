@@ -115,7 +115,7 @@ router.get('/chat/:groupId', function(req, res){
                 console.log(err);
                 return;
               }else{
-                res.render('chat', {groups: grp, messages:msg, users: usr, friends: req.user.friends});
+                res.render('chat', {currGroup: req.params.groupId, groups: grp, messages:msg, users: usr, friends: req.user.friends});
               }
             });
           }
